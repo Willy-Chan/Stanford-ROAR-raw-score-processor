@@ -6,7 +6,7 @@ import glob
 home = os.path.expanduser('~')
 
 #  get path to most recent lookup table
-ltpath = '/home/WillyChan/mysite/tables/'
+ltpath = 'Stanford-ROAR-raw-score-processor/tables/'
 
 #  load lookup tables into pandas dataframes
 percentile_lt = pd.read_csv(ltpath + 'Standard Score to Percentile.csv', index_col='standard.Score')
