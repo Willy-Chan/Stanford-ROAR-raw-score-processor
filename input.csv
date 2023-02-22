@@ -1,0 +1,2 @@
+record_id,redcap_event_name,timepoint,age_years,age_months,wj_lwid_raw,wj_wa_raw,wj_srf_correct_raw,wj_srf_incorrect_raw,wj_mff_raw,twre_swe_raw,twre_pde_raw,ctopp_rd_raw,ctopp_rl_raw,ctopp_md_raw,wj_lwid_ss,wj_wa_ss,wj_or_ss,wj_srf_ss,wj_mff_ss,wj_mff_perc,wj_brs,wj_brs_perc,wj_brs_level,wj_rf,wj_rf_perc,wj_rf_level
+2199,visit_3_arm_1,S2,12,11,64,28,65,0,131,83,40,9,16,20,,,,,,,,,,,,
