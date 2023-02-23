@@ -3,11 +3,12 @@ import os
 import glob
 
 #  get path to most recent lookup table
-ltpath = 'tables/'
+ltpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'tables/')
 
 
 #  load lookup tables into pandas dataframes
-percentile_lt = pd.read_csv(ltpath + 'Standard Score to Percentile.csv', index_col='standard.Score')
+percentile_lt = pd.read_csv(os.path.join(ltpath, 'Standard Score to Percentile.csv'), index_col='standard.Score')
+
 
 def towre_lookup(input_df, output_merged):
     """
