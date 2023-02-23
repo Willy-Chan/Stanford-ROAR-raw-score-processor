@@ -17,10 +17,10 @@ def importScores(input_df):
                  'twre_index_perc', 'ctopp_md_raw', 'ctopp_md_ss', 'ctopp_md_perc', 'ctopp_rd_raw', 'ctopp_rd_ss',
                  'ctopp_rd_perc', 'ctopp_rl_raw',
                  'ctopp_rl_ss', 'ctopp_rl_perc', 'ctopp_rapid_sum', 'ctopp_rapid', 'ctopp_rapid_perc', 'study_name',
-                 'lmb_cohort', 'intervention', 'study_format', 'mock_mri_run', 'mri_run', 'wj_run', 'towre_run', 'wasi_run',
-                 'ctopp_run',
-                 'ames_run', 'wj_form_num', 'wj_form', 'wj_lwid_run', 'wj_wa_run', 'wj_or_run', 'wj_srf_run', 'wj_mff_run',
-                 'towre_form_num', 'towre_form', 'towre_swe_run', 'towre_pde_run', 'wasi_vocab_run',
+                 'lmb_cohort', 'intervention', 'study_format', 'mock_mri_run', 'mri_run', 'wj_run', 'towre_run',
+                 'wasi_run', 'ctopp_run',
+                 'ames_run', 'wj_form_num', 'wj_form', 'wj_lwid_run', 'wj_wa_run', 'wj_or_run', 'wj_srf_run',
+                 'wj_mff_run', 'towre_form_num', 'towre_form', 'towre_swe_run', 'towre_pde_run', 'wasi_vocab_run',
                  'wasi_mr_run', 'ctopp_md_run', 'ctopp_rd_run', 'ctopp_rl_run', 'ames_type___1', 'ames_type___2',
                  'ames_type___3', 'ames_type___4', 'ames_type___5'])
 
@@ -35,7 +35,6 @@ def importScores(input_df):
 
     ##########################
 
-    print(input_df)
     # run sheet prep for each timepoint
     prep_timepoints(input_df, output_merged)
 
@@ -44,19 +43,18 @@ def importScores(input_df):
     ctopp_lookup(input_df, output_merged)
     wj_lookup(input_df, output_merged)
 
-
+    x = len(output_merged) - 1
     # remove values that aren't in redcap + automatically calculated sum values from final .csv
-    for x in range(len(output_merged)):
-        if (input_df.timepoint[x] == "CHIN") | (input_df.timepoint[x] == "B2") | (input_df.timepoint[x] == "F3") | (
-                input_df.timepoint[x] == "S4"):
-            output_merged.drop(columns=['timepoint', 'age_years', 'age_months', 'twre_index_sum', 'ctopp_md_raw', 'ctopp_md_ss',
-                                        'ctopp_md_perc', 'ctopp_rd_raw', 'ctopp_rd_ss', 'ctopp_rd_perc', 'ctopp_rl_raw',
-                                        'ctopp_rl_ss', 'ctopp_rl_perc', 'ctopp_rapid_sum', 'ctopp_rapid', 'ctopp_rapid_perc'],
-                               inplace=True)
-        else:
-            output_merged.drop(columns=['timepoint', 'age_years', 'age_months', 'ctopp_rapid_sum', 'twre_index_sum'],
-                               inplace=True)
-
+    if (input_df.timepoint[x] == "CHIN") | (input_df.timepoint[x] == "B2") | (input_df.timepoint[x] == "F3") | (
+            input_df.timepoint[x] == "S4"):
+        output_merged.drop(
+            columns=['timepoint', 'age_years', 'age_months', 'twre_index_sum', 'ctopp_md_raw', 'ctopp_md_ss',
+                     'ctopp_md_perc', 'ctopp_rd_raw', 'ctopp_rd_ss', 'ctopp_rd_perc', 'ctopp_rl_raw',
+                     'ctopp_rl_ss', 'ctopp_rl_perc', 'ctopp_rapid_sum', 'ctopp_rapid', 'ctopp_rapid_perc'],
+            inplace=True)
+    else:
+        output_merged.drop(columns=['timepoint', 'age_years', 'age_months', 'ctopp_rapid_sum', 'twre_index_sum'],
+                           inplace=True)
 
     return output_merged
     # # write output to .csv
@@ -64,5 +62,16 @@ def importScores(input_df):
     #
     # print("score_output.csv generated successfully!")
 
+
+
+#DEBUGGING/TESTING
 if __name__ == '__main__':
-    importScores()
+    import os
+    import glob
+    home = os.path.expanduser('~')
+    path = max(glob.iglob(home+'/Documents/redcap/scoreinput.csv'), key=os.path.getctime)
+    df = pd.read_csv(path)
+    output = importScores(df)
+    output.to_csv(home + '/Downloads/score_output.csv', index=False)
+
+    print("score_output.csv generated successfully!")

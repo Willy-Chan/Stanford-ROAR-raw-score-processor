@@ -2,11 +2,8 @@ import pandas as pd
 import os
 import glob
 
-# get path to user's home directory
-home = os.path.expanduser('~')
-
 #  get path to most recent lookup table
-ltpath = max(glob.iglob(home + '/Documents/redcap/tables/'), key=os.path.getctime)
+ltpath = 'tables/'
 
 #  load lookup tables into pandas dataframes
 percentile_lt = pd.read_csv(ltpath + 'Standard Score to Percentile.csv', index_col='standard.Score')
